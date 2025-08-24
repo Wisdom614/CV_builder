@@ -87,10 +87,6 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: var(--shadow);
-            position: sticky;
-            top: 20px;
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
         .section-title {
@@ -135,18 +131,12 @@
             font-size: 16px;
             font-weight: 500;
             transition: background-color 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
         button:hover {
             background-color: var(--primary-color);
-        }
-
-        .btn-danger {
-            background-color: var(--accent-color);
-        }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
         }
 
         .btn-success {
@@ -157,44 +147,26 @@
             background-color: #219653;
         }
 
-        .dynamic-form-elements {
-            border: 1px solid #eee;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .remove-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
+        .action-buttons {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
         }
 
-        .dynamic-form-elements h4 {
-            margin-bottom: 10px;
-            color: var(--primary-color);
-            padding-right: 30px;
+        .pdf-message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e7f5ff;
+            border-radius: 5px;
+            display: none;
         }
 
         /* Resume Preview Styles */
         .resume {
             display: grid;
             grid-template-columns: 30% 70%;
-            min-height: 842px;
-            width: 595px;
-            margin: 0 auto;
+            width: 100%;
             box-shadow: var(--shadow);
             opacity: 0;
             animation: fadeIn 0.5s forwards;
@@ -218,13 +190,20 @@
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid white;
             margin: 0 auto 20px;
             display: block;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
         }
 
         .contact-info, .skills, .languages, .interests {
@@ -304,26 +283,10 @@
             margin-bottom: 8px;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .pdf-message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #e7f5ff;
-            border-radius: 5px;
-            display: none;
-        }
-
         /* Responsive adjustments */
         @media (max-width: 650px) {
             .resume {
                 grid-template-columns: 1fr;
-                width: 100%;
             }
             
             .sidebar {
@@ -333,21 +296,14 @@
             .contact-item, .skill-item, .language-item, .interest-item {
                 justify-content: center;
             }
-        }
-
-        /* Print styles for PDF */
-        @media print {
-            body * {
-                visibility: hidden;
+            
+            .action-buttons {
+                flex-direction: column;
             }
-            #resume-preview, #resume-preview * {
-                visibility: visible;
-            }
-            #resume-preview {
-                position: absolute;
-                left: 0;
-                top: 0;
+            
+            button {
                 width: 100%;
+                margin-right: 0;
             }
         }
 
@@ -399,11 +355,6 @@
                     <textarea id="profileSummary" placeholder="A brief summary of your professional background...">Experienced software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.</textarea>
                 </div>
                 
-                <div class="form-group">
-                    <label for="profilePicture">Profile Picture</label>
-                    <input type="file" id="profilePicture" accept="image/*">
-                </div>
-                
                 <h2 class="section-title">Contact Information</h2>
                 
                 <div class="form-group">
@@ -438,146 +389,83 @@
                 
                 <h2 class="section-title">Education</h2>
                 <div id="education-container">
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Degree</label>
-                            <input type="text" class="education-degree" placeholder="Bachelor of Science in Computer Science" value="Bachelor of Science in Computer Science">
-                        </div>
-                        <div class="form-group">
-                            <label>Institution</label>
-                            <input type="text" class="education-institution" placeholder="University of Example" value="University of Buea">
-                        </div>
-                        <div class="form-group">
-                            <label>Years</label>
-                            <input type="text" class="education-years" placeholder="2015 - 2019" value="2014 - 2018">
-                        </div>
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" id="education-degree" placeholder="Bachelor of Science in Computer Science" value="Bachelor of Science in Computer Science">
+                    </div>
+                    <div class="form-group">
+                        <label>Institution</label>
+                        <input type="text" id="education-institution" placeholder="University of Example" value="University of Buea">
+                    </div>
+                    <div class="form-group">
+                        <label>Years</label>
+                        <input type="text" id="education-years" placeholder="2015 - 2019" value="2014 - 2018">
                     </div>
                 </div>
-                <button id="add-education" class="btn-success">+ Add Education</button>
                 
                 <h2 class="section-title">Work Experience</h2>
                 <div id="experience-container">
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Job Title</label>
-                            <input type="text" class="experience-title" placeholder="Software Developer" value="Software Developer">
-                        </div>
-                        <div class="form-group">
-                            <label>Company</label>
-                            <input type="text" class="experience-company" placeholder="Tech Corp Inc." value="Quartets Inc.">
-                        </div>
-                        <div class="form-group">
-                            <label>Years</label>
-                            <input type="text" class="experience-years" placeholder="Jan 2020 - Present" value="2022 - Present">
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="experience-description" placeholder="Responsibilities and achievements...">Developed and maintained web applications using React and Node.js. Led a team of 5 developers on major projects.</textarea>
-                        </div>
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" id="experience-title" placeholder="Software Developer" value="Software Developer">
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" id="experience-company" placeholder="Tech Corp Inc." value="Quartets Inc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Years</label>
+                        <input type="text" id="experience-years" placeholder="Jan 2020 - Present" value="2022 - Present">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="experience-description" placeholder="Responsibilities and achievements...">Developed and maintained web applications using React and Node.js. Led a team of 5 developers on major projects.</textarea>
                     </div>
                 </div>
-                <button id="add-experience" class="btn-success">+ Add Experience</button>
                 
                 <h2 class="section-title">Skills</h2>
                 <div id="skills-container">
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Skill</label>
-                            <input type="text" class="skill-name" placeholder="JavaScript" value="JavaScript">
-                        </div>
-                        <div class="form-group">
-                            <label>Proficiency (0-100)</label>
-                            <input type="number" class="skill-level" min="0" max="100" placeholder="85" value="90">
-                        </div>
-                    </div>
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Skill</label>
-                            <input type="text" class="skill-name" placeholder="React" value="React">
-                        </div>
-                        <div class="form-group">
-                            <label>Proficiency (0-100)</label>
-                            <input type="number" class="skill-level" min="0" max="100" placeholder="85" value="85">
-                        </div>
-                    </div>
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Skill</label>
-                            <input type="text" class="skill-name" placeholder="Node.js" value="Node.js">
-                        </div>
-                        <div class="form-group">
-                            <label>Proficiency (0-100)</label>
-                            <input type="number" class="skill-level" min="0" max="100" placeholder="85" value="80">
-                        </div>
+                    <div class="form-group">
+                        <label>Skills (comma separated)</label>
+                        <input type="text" id="skills" placeholder="JavaScript, React, Node.js" value="JavaScript, React, Node.js, HTML, CSS">
                     </div>
                 </div>
-                <button id="add-skill" class="btn-success">+ Add Skill</button>
                 
                 <h2 class="section-title">Projects</h2>
                 <div id="projects-container">
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Project Title</label>
-                            <input type="text" class="project-title" placeholder="E-commerce Website" value="E-commerce Website">
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="project-description" placeholder="Project details and your role...">Developed a full-stack e-commerce platform with React and Node.js. Implemented payment processing and user authentication.</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Link</label>
-                            <input type="url" class="project-link" placeholder="https://example.com/project">
-                        </div>
+                    <div class="form-group">
+                        <label>Project Title</label>
+                        <input type="text" id="project-title" placeholder="E-commerce Website" value="E-commerce Website">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="project-description" placeholder="Project details and your role...">Developed a full-stack e-commerce platform with React and Node.js. Implemented payment processing and user authentication.</textarea>
                     </div>
                 </div>
-                <button id="add-project" class="btn-success">+ Add Project</button>
                 
                 <h2 class="section-title">Certifications & Awards</h2>
                 <div id="certifications-container">
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Title</label>
-                            <input type="text" class="certification-title" placeholder="AWS Certified Developer" value="AWS Certified Developer">
-                        </div>
-                        <div class="form-group">
-                            <label>Issuer</label>
-                            <input type="text" class="certification-issuer" placeholder="Amazon Web Services" value="Amazon Web Services">
-                        </div>
-                        <div class="form-group">
-                            <label>Year</label>
-                            <input type="text" class="certification-year" placeholder="2022" value="2022">
-                        </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="certification-title" placeholder="AWS Certified Developer" value="AWS Certified Developer">
+                    </div>
+                    <div class="form-group">
+                        <label>Issuer</label>
+                        <input type="text" id="certification-issuer" placeholder="Amazon Web Services" value="Amazon Web Services">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" id="certification-year" placeholder="2022" value="2022">
                     </div>
                 </div>
-                <button id="add-certification" class="btn-success">+ Add Certification</button>
                 
                 <h2 class="section-title">Languages</h2>
                 <div id="languages-container">
-                    <div class="dynamic-form-elements">
-                        <button class="remove-btn">&times;</button>
-                        <div class="form-group">
-                            <label>Language</label>
-                            <input type="text" class="language-name" placeholder="English" value="English">
-                        </div>
-                        <div class="form-group">
-                            <label>Proficiency</label>
-                            <select class="language-proficiency">
-                                <option value="Native">Native</option>
-                                <option value="Fluent" selected>Fluent</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Basic">Basic</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label>Languages (comma separated)</label>
+                        <input type="text" id="languages" placeholder="English, Spanish" value="English, French">
                     </div>
                 </div>
-                <button id="add-language" class="btn-success">+ Add Language</button>
                 
                 <h2 class="section-title">Hobbies & Interests</h2>
                 <div class="form-group">
@@ -588,7 +476,6 @@
                 <div class="action-buttons">
                     <button id="update-preview">Update Preview</button>
                     <button id="generate-pdf" class="btn-success">Generate PDF</button>
-                    <button id="print-resume">Print Resume</button>
                 </div>
                 
                 <div id="pdf-message" class="pdf-message">
@@ -605,7 +492,7 @@
                 <h2 class="section-title">Resume Preview</h2>
                 <div id="resume-preview" class="resume">
                     <div class="sidebar">
-                        <img id="preview-profile-pic" class="profile-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMzNDk4ZGIiLz48dGV4dCB4PSIzMCIgeT0iNTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzMCIgZmlsbD0id2hpdGUiPlBSPC90ZXh0Pjwvc3ZnPg==" alt="Profile">
+                        <div class="profile-img">BW</div>
                         
                         <h3 class="section-title-preview">CONTACT</h3>
                         <div class="contact-info">
@@ -635,7 +522,8 @@
                         
                         <h3 class="section-title-preview">LANGUAGES</h3>
                         <div class="languages" id="preview-languages">
-                            <div class="language-item"><i class="fas fa-language"></i> English (Fluent)</div>
+                            <div class="language-item"><i class="fas fa-language"></i> English</div>
+                            <div class="language-item"><i class="fas fa-language"></i> French</div>
                         </div>
                         
                         <h3 class="section-title-preview">INTERESTS</h3>
@@ -699,112 +587,15 @@
             // DOM Elements
             const updatePreviewBtn = document.getElementById('update-preview');
             const generatePdfBtn = document.getElementById('generate-pdf');
-            const printResumeBtn = document.getElementById('print-resume');
-            const profilePictureInput = document.getElementById('profilePicture');
-            const previewProfilePic = document.getElementById('preview-profile-pic');
             const pdfMessage = document.getElementById('pdf-message');
             const pdfLoading = document.getElementById('pdf-loading');
-            
-            // Dynamic form elements
-            const addEducationBtn = document.getElementById('add-education');
-            const addExperienceBtn = document.getElementById('add-experience');
-            const addSkillBtn = document.getElementById('add-skill');
-            const addProjectBtn = document.getElementById('add-project');
-            const addCertificationBtn = document.getElementById('add-certification');
-            const addLanguageBtn = document.getElementById('add-language');
-            
-            // Add event listeners for remove buttons
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-btn')) {
-                    const element = e.target.closest('.dynamic-form-elements');
-                    if (element && element.parentElement.querySelectorAll('.dynamic-form-elements').length > 1) {
-                        element.remove();
-                        updatePreview();
-                    }
-                }
-            });
-            
-            // Profile picture preview
-            profilePictureInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewProfilePic.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            // Add education entry
-            addEducationBtn.addEventListener('click', function() {
-                const container = document.getElementById('education-container');
-                const newEntry = container.querySelector('.dynamic-form-elements').cloneNode(true);
-                clearInputs(newEntry);
-                container.appendChild(newEntry);
-            });
-            
-            // Add experience entry
-            addExperienceBtn.addEventListener('click', function() {
-                const container = document.getElementById('experience-container');
-                const newEntry = container.querySelector('.dynamic-form-elements').cloneNode(true);
-                clearInputs(newEntry);
-                container.appendChild(newEntry);
-            });
-            
-            // Add skill entry
-            addSkillBtn.addEventListener('click', function() {
-                const container = document.getElementById('skills-container');
-                const newEntry = container.querySelector('.dynamic-form-elements').cloneNode(true);
-                clearInputs(newEntry);
-                container.appendChild(newEntry);
-            });
-            
-            // Add project entry
-            addProjectBtn.addEventListener('click', function() {
-                const container = document.getElementById('projects-container');
-                const newEntry = container.querySelector('.dynamic-form-elements').cloneNode(true);
-                clearInputs(newEntry);
-                container.appendChild(newEntry);
-            });
-            
-            // Add certification entry
-            addCertificationBtn.addEventListener('click', function() {
-                const container = document.getElementById('certifications-container');
-                const newEntry = container.querySelector('.dynamic-form-elements').cloneNode(true);
-                clearInputs(newEntry);
-                container.appendChild(newEntry);
-            });
-            
-            // Add language entry
-            addLanguageBtn.addEventListener('click', function() {
-                const container = document.getElementById('languages-container');
-                const newEntry = container.querySelector('.dynamic-form-elements').cloneNode(true);
-                clearInputs(newEntry);
-                container.appendChild(newEntry);
-            });
-            
-            // Clear inputs in a form section
-            function clearInputs(section) {
-                const inputs = section.querySelectorAll('input, textarea, select');
-                inputs.forEach(input => {
-                    input.value = '';
-                });
-            }
-            
-            // Print resume
-            printResumeBtn.addEventListener('click', function() {
-                window.print();
-            });
             
             // Update preview
             updatePreviewBtn.addEventListener('click', updatePreview);
             
             // Auto-update preview on input change
             document.addEventListener('input', function(e) {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-                    updatePreview();
-                }
+                updatePreview();
             });
             
             function updatePreview() {
@@ -822,118 +613,107 @@
                 document.getElementById('preview-website').textContent = document.getElementById('website').value ? document.getElementById('website').value.replace('https://', '') : 'johndoe.com';
                 
                 // Education
-                const educationEntries = document.getElementById('education-container').querySelectorAll('.dynamic-form-elements');
-                let educationHtml = '';
-                educationEntries.forEach(entry => {
-                    const degree = entry.querySelector('.education-degree').value || 'Bachelor of Science in Computer Science';
-                    const institution = entry.querySelector('.education-institution').value || 'University of Example';
-                    const years = entry.querySelector('.education-years').value || '2015 - 2019';
-                    
-                    educationHtml += `
-                        <div class="education-item">
-                            <div class="item-title">${degree}</div>
-                            <div class="item-subtitle">${institution}</div>
-                            <div class="item-date">${years}</div>
-                        </div>
-                    `;
-                });
-                document.getElementById('preview-education').innerHTML = educationHtml;
+                const degree = document.getElementById('education-degree').value || 'Bachelor of Science in Computer Science';
+                const institution = document.getElementById('education-institution').value || 'University of Example';
+                const years = document.getElementById('education-years').value || '2015 - 2019';
+                
+                document.getElementById('preview-education').innerHTML = `
+                    <div class="education-item">
+                        <div class="item-title">${degree}</div>
+                        <div class="item-subtitle">${institution}</div>
+                        <div class="item-date">${years}</div>
+                    </div>
+                `;
                 
                 // Experience
-                const experienceEntries = document.getElementById('experience-container').querySelectorAll('.dynamic-form-elements');
-                let experienceHtml = '';
-                experienceEntries.forEach(entry => {
-                    const title = entry.querySelector('.experience-title').value || 'Software Developer';
-                    const company = entry.querySelector('.experience-company').value || 'Tech Corp Inc.';
-                    const years = entry.querySelector('.experience-years').value || 'Jan 2020 - Present';
-                    const description = entry.querySelector('.experience-description').value || 'Developed and maintained web applications using React and Node.js.';
-                    
-                    experienceHtml += `
-                        <div class="experience-item">
-                            <div class="item-title">${title}</div>
-                            <div class="item-subtitle">${company}</div>
-                            <div class="item-date">${years}</div>
-                            <p>${description}</p>
-                        </div>
-                    `;
-                });
-                document.getElementById('preview-experience').innerHTML = experienceHtml;
+                const title = document.getElementById('experience-title').value || 'Software Developer';
+                const company = document.getElementById('experience-company').value || 'Tech Corp Inc.';
+                const expYears = document.getElementById('experience-years').value || 'Jan 2020 - Present';
+                const description = document.getElementById('experience-description').value || 'Developed and maintained web applications using React and Node.js.';
+                
+                document.getElementById('preview-experience').innerHTML = `
+                    <div class="experience-item">
+                        <div class="item-title">${title}</div>
+                        <div class="item-subtitle">${company}</div>
+                        <div class="item-date">${expYears}</div>
+                        <p>${description}</p>
+                    </div>
+                `;
                 
                 // Skills
-                const skillEntries = document.getElementById('skills-container').querySelectorAll('.dynamic-form-elements');
+                const skills = document.getElementById('skills').value || 'JavaScript, React, Node.js';
                 let skillsHtml = '';
-                skillEntries.forEach(entry => {
-                    const name = entry.querySelector('.skill-name').value || 'JavaScript';
-                    const level = entry.querySelector('.skill-level').value || '85';
-                    
-                    skillsHtml += `
-                        <div class="skill-item">
-                            <div>${name}</div>
-                            <div class="skill-meter"><div class="skill-level" style="width: ${level}%;"></div></div>
-                        </div>
-                    `;
+                
+                skills.split(',').forEach(skill => {
+                    skill = skill.trim();
+                    if (skill) {
+                        // Generate a random proficiency between 70-95% for demo purposes
+                        const proficiency = Math.floor(Math.random() * 26) + 70;
+                        skillsHtml += `
+                            <div class="skill-item">
+                                <div>${skill}</div>
+                                <div class="skill-meter"><div class="skill-level" style="width: ${proficiency}%;"></div></div>
+                            </div>
+                        `;
+                    }
                 });
+                
                 document.getElementById('preview-skills').innerHTML = skillsHtml;
                 
                 // Projects
-                const projectEntries = document.getElementById('projects-container').querySelectorAll('.dynamic-form-elements');
-                let projectsHtml = '';
-                projectEntries.forEach(entry => {
-                    const title = entry.querySelector('.project-title').value || 'E-commerce Website';
-                    const description = entry.querySelector('.project-description').value || 'Developed a full-stack e-commerce platform with React and Node.js.';
-                    const link = entry.querySelector('.project-link').value || '';
-                    
-                    projectsHtml += `
-                        <div class="project-item">
-                            <div class="item-title">${title}</div>
-                            <p>${description}</p>
-                            ${link ? `<a href="${link}" target="_blank">View Project</a>` : ''}
-                        </div>
-                    `;
-                });
-                document.getElementById('preview-projects').innerHTML = projectsHtml;
+                const projectTitle = document.getElementById('project-title').value || 'E-commerce Website';
+                const projectDescription = document.getElementById('project-description').value || 'Developed a full-stack e-commerce platform with React and Node.js.';
+                
+                document.getElementById('preview-projects').innerHTML = `
+                    <div class="project-item">
+                        <div class="item-title">${projectTitle}</div>
+                        <p>${projectDescription}</p>
+                    </div>
+                `;
                 
                 // Certifications
-                const certificationEntries = document.getElementById('certifications-container').querySelectorAll('.dynamic-form-elements');
-                let certificationsHtml = '';
-                certificationEntries.forEach(entry => {
-                    const title = entry.querySelector('.certification-title').value || 'AWS Certified Developer';
-                    const issuer = entry.querySelector('.certification-issuer').value || 'Amazon Web Services';
-                    const year = entry.querySelector('.certification-year').value || '2022';
-                    
-                    certificationsHtml += `
-                        <div class="certification-item">
-                            <div class="item-title">${title}</div>
-                            <div class="item-subtitle">${issuer}</div>
-                            <div class="item-date">${year}</div>
-                        </div>
-                    `;
-                });
-                document.getElementById('preview-certifications').innerHTML = certificationsHtml;
+                const certTitle = document.getElementById('certification-title').value || 'AWS Certified Developer';
+                const certIssuer = document.getElementById('certification-issuer').value || 'Amazon Web Services';
+                const certYear = document.getElementById('certification-year').value || '2022';
+                
+                document.getElementById('preview-certifications').innerHTML = `
+                    <div class="certification-item">
+                        <div class="item-title">${certTitle}</div>
+                        <div class="item-subtitle">${certIssuer}</div>
+                        <div class="item-date">${certYear}</div>
+                    </div>
+                `;
                 
                 // Languages
-                const languageEntries = document.getElementById('languages-container').querySelectorAll('.dynamic-form-elements');
+                const languages = document.getElementById('languages').value || 'English, French';
                 let languagesHtml = '';
-                languageEntries.forEach(entry => {
-                    const name = entry.querySelector('.language-name').value || 'English';
-                    const proficiency = entry.querySelector('.language-proficiency').value || 'Native';
-                    
-                    languagesHtml += `
-                        <div class="language-item"><i class="fas fa-language"></i> ${name} (${proficiency})</div>
-                    `;
+                
+                languages.split(',').forEach(language => {
+                    language = language.trim();
+                    if (language) {
+                        languagesHtml += `<div class="language-item"><i class="fas fa-language"></i> ${language}</div>`;
+                    }
                 });
+                
                 document.getElementById('preview-languages').innerHTML = languagesHtml;
                 
                 // Interests
                 const interests = document.getElementById('interests').value || 'Photography, Hiking, Reading';
                 let interestsHtml = '';
+                
                 interests.split(',').forEach(interest => {
                     interest = interest.trim();
                     if (interest) {
                         interestsHtml += `<div class="interest-item"><i class="fas fa-heart"></i> ${interest}</div>`;
                     }
                 });
+                
                 document.getElementById('preview-interests').innerHTML = interestsHtml;
+                
+                // Update profile initials
+                const fullName = document.getElementById('fullName').value || 'John Doe';
+                const initials = fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+                document.querySelector('.profile-img').textContent = initials;
                 
                 // Add fade-in animation
                 const resumePreview = document.getElementById('resume-preview');
@@ -943,7 +723,7 @@
                 }, 10);
             }
             
-            // Generate PDF - Fixed blur issue with higher resolution
+            // Generate PDF
             generatePdfBtn.addEventListener('click', generatePDF);
             
             function generatePDF() {
@@ -960,12 +740,13 @@
                     clone.style.position = 'absolute';
                     clone.style.left = '0';
                     clone.style.top = '0';
+                    clone.style.width = '595px'; // A4 width in pixels
                     clone.style.zIndex = '9999';
                     document.body.appendChild(clone);
                     
                     // Use html2canvas with higher scale for better resolution
                     html2canvas(clone, {
-                        scale: 3, // Triple resolution for crisp text
+                        scale: 2, // Double resolution for crisp text
                         useCORS: true,
                         logging: false,
                         backgroundColor: '#ffffff'
